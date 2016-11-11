@@ -64,3 +64,14 @@ Requires:
 Usage:
 
     getImageData.sc TSVFILE [EXTENSION]
+
+
+Examples:
+
+Download all images in this .tsv catalog:
+
+    getImageData.sc bern87.tsv
+
+Resume downloading from the 59th image (index 58):
+
+    getImageData.sc -- bern87.tsv   --startFrom 58

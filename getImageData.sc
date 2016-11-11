@@ -7,7 +7,7 @@ Input:  the script takes a file with four tab-delimited columns, in the order ge
 
     Caption Urn Rights Source
 
-Optionally, you may specify a file name extension:  the default is `jpg`.
+Optionally, you may specify a file name extension:  the default is `jpg`. You may also specify an integer index to "startFrom": this defaults to 0 (first item), but if your download is interrupted, it can be convenient to resume at a specified point in the list of images.
 
 Output: A series of binary image files.  The file names are the collection-object-version identifiers of the image's CITE URN, with periods replaced by underscore.  Example:  an image with URN `urn:cite:ecodices:bern87.8.v1` using the default `jpg` filename extension will be named `bern87_1_v1.jpg`
 
@@ -19,9 +19,17 @@ Requires:
 
 Usage:
 
-    getImageData.sc TSVFILE [EXTENSION]
+    getImageData.sc TSVFILE [EXTENSION] [STARTFROM]
 
+Examples:
 
+Download all images in this .tsv catalog:
+
+        getImageData.sc bern87.tsv
+
+Resume downloading from the 59th image (index 58):
+
+    getImageData.sc -- bern87.tsv   --startFrom 58
 
 */
 
@@ -43,16 +51,16 @@ def downloadImg(img: Img, extension: String) {
 }
 
 @main
-def download(f: String, extension: String = "jpg" ) = {
+def download(f: String, extension: String = "jpg", startFrom : Int = 0 ) = {
   val citeData = Source.fromFile(f).getLines.toVector
   val header = citeData.take(1)
-  val data = citeData.drop(1)
+  val data = citeData.drop(startFrom + 1)
   val imgs = data.map{ s =>
     val cols = s.split("\t")
     Img(cols(0), cols(1), cols(2), cols(3))
   }
   for (i <- imgs) {
-    println("Downloading " + i.src + " ... ")
+    println("Downloading " + i.urn + " ... ")
     downloadImg(i, extension)
   }
 

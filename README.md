@@ -3,8 +3,8 @@
 Utilities for working with data in [IIIF](http://iiif.io/) format.  Currently, two simple Ammonite scripts:
 
 
-- `iiifToCite.sc`
-- `getImageData.sc`
+- `iiifToCite.sc`:  create simple .tsv data sets from IIIF manifests
+- `getImageData.sc`:  download binary image data to appropriately named local files
 
 
 ## `iiifToCite.sc`

@@ -59,6 +59,7 @@ def download(f: String, extension: String = "jpg", startFrom : Int = 0 ) = {
     val cols = s.split("\t")
     Img(cols(0), cols(1), cols(2), cols(3))
   }
+  println("Total number of images to download: " + (imgs.size - startFrom) )
   for (i <- imgs) {
     println("Downloading " + i.urn + " ... ")
     downloadImg(i, extension)
